@@ -28,6 +28,7 @@ app.post('/add-url', async (req, res) => {
     const to = req.query.to;
     const key = req.query.key;
     if (key !== process.env.KEY) {
+      console.log("Correct key:", process.env.KEY, "Provided key:", key);
         return res.status(403).send('Forbidden: Invalid key');
         }
     if (!from || !to) {
