@@ -29,6 +29,19 @@ app.post('/add-url', async (req, res) => {
     urls[from] = to;
     fs.writeFileSync('urls.json', JSON.stringify(urls, null, 2));
     res.send(`URL added: ${from} -> ${to}`);
+
+    // Reload the app to apply changes
+    const exec = require('child_process').exec;
+    exec('yarn start', (error, stdout, stderr) => {
+      if (error || stderr) {
+        console.error(`exec error: ${error || stderr}`);
+        return;
+      } else {
+        // Kill the current process
+        process.exit(0);
+      }
+      console.log(`stdout: ${stdout}`);
+    });
 });
 
 app.listen(port, () => {
