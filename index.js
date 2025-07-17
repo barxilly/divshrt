@@ -20,7 +20,7 @@ for (const [key, value] of Object.entries(urls)) {
 }
 
 app.post('/add-url', express.json(), (req, res) => {
-  const {short, long} = req.body;
+  const {short, long} = JSON.parse(req.body);
   if (!short || !long) {
     return res.status(400).send('Short and long URLs are required');
   }
