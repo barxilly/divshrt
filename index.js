@@ -18,11 +18,13 @@ let urls = JSON.parse(fs.readFileSync('urls.json', 'utf8'));
 
 function setupRoutes() {
   // Clear existing dynamic routes (keep only / and /add-url)
-  app._router.stack = app._router.stack.filter(layer => {
-    if (!layer.route) return true;
-    const path = layer.route.path;
-    return path === '/' || path === '/add-url';
-  });
+  if (app._router && app._router.stack) {
+    app._router.stack = app._router.stack.filter(layer => {
+      if (!layer.route) return true;
+      const path = layer.route.path;
+      return path === '/' || path === '/add-url';
+    });
+  }
   
   // Add URL redirect routes
   for (const [key, value] of Object.entries(urls)) {
