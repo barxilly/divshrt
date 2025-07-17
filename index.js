@@ -19,8 +19,8 @@ for (const [key, value] of Object.entries(urls)) {
   });
 }
 
-app.post('/add-url', express.json(), (req, res) => {
-  const jsonData = req.body;
+app.post('/add-url', express.json(),async (req, res) => {
+  const jsonData = await req.body;
   const short = jsonData[0]
   const long = jsonData[1];
   if (!short || !long) {
