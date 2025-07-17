@@ -6,12 +6,12 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-import {fs} from 'fs';
+const fs = require('fs');
 
 if (!fs.existsSync('urls.json')) {
   fs.writeFileSync('urls.json', JSON.stringify({}));
 }
-import {urls} from './urls.js';
+const urls = JSON.parse(fs.readFileSync('urls.json', 'utf8'));
 
 for (const [key, value] of Object.entries(urls)) {
   app.get(`/${key}`, (req, res) => {
