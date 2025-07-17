@@ -20,17 +20,15 @@ for (const [key, value] of Object.entries(urls)) {
 }
 
 app.post('/add-url', async (req, res) => {
-  const jsonData = await req.body
-  console.log('Received data:', req);
-  const short = jsonData[0]
-  const long = jsonData[1];
-  if (!short || !long) {
-    return res.status(400).send('Short and long URLs are required');
-  }
-  const urls = JSON.parse(fs.readFileSync('urls.json', 'utf8'));
-  urls[short] = long;
-  fs.writeFileSync('urls.json', JSON.stringify(urls, null, 2));
-  res.status(201).send(`URL added: ${short} -> ${long}`);
+  // Get everything from add-url?from=XYZ&to=ABC
+    const from = req.query.from;
+    const to = req.query.to;
+    if (!from || !to) {
+      return res.status(400).send('Missing from or to parameter');
+    }
+    urls[from] = to;
+    fs.writeFileSync('urls.json', JSON.stringify(urls, null, 2));
+    res.send(`URL added: ${from} -> ${to}`);
 });
 
 app.listen(port, () => {
