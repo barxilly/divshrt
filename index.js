@@ -20,8 +20,8 @@ for (const [key, value] of Object.entries(urls)) {
 }
 
 app.post('/add-url', async (req, res) => {
-  const jsonData = await req;
-  console.log('Received data:', req.body);
+  const jsonData = await req.body
+  console.log('Received data:', req);
   const short = jsonData[0]
   const long = jsonData[1];
   if (!short || !long) {
